@@ -112,7 +112,6 @@ contract VestingWallet is Context, Ownable {
         emit ERC20Released(token, amount);
         SafeERC20.safeTransfer(IERC20(token), owner(), amount);
         _lastReleased[msg.sender] = uint64(block.timestamp);
-        console.log(_lastReleased[msg.sender]);
     }
     /**
      * @dev Calculates the amount of tokens that has already vested. Default implementation is a linear vesting curve.
@@ -135,7 +134,6 @@ contract VestingWallet is Context, Ownable {
         uint256 totalAllocation,
         uint64 timestamp
     ) internal view virtual returns (uint256) {
-        console.log(_lastReleased[user] + _interval <= timestamp);
         if (timestamp < start() || timestamp < start() + _interval) {
             return 0;
         } else if (timestamp >= end()) {
